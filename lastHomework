@@ -1,0 +1,87 @@
+package com.basics;
+
+public class Exercises {
+    public static void main(String[] args) {
+        String text = "kndaafodngoaasjkdfsjf kjsdaaaaaasjdfn!jsdnf dfoasdofnsodkf;nsodfnaaaaaaaaaaaaaaaaaaaaaaaa";
+        System.out.println(highestApp(text, 'a'));
+        System.out.println(censorship("Local woman - Alicia Smith is accused of murder on John Black."));
+        System.out.println(convertToDec("11011"));
+        System.out.println(covertToBin(27));
+    }
+
+    static int highestApp(String s, char c) {
+        char textArray[] = s.toCharArray();
+        int highestTempC = 0;
+        int tempC = 0;
+        for (int i = 0; i < textArray.length; i++) {
+            char x = textArray[i];
+            if (x == c)
+                ++tempC;
+            if (x != c || i == (textArray.length - 1)) {
+                if (tempC > highestTempC) {
+                    highestTempC = tempC;
+                }
+                tempC = 0;
+            }
+        }
+        return highestTempC;
+    }
+
+    static char[] censorship(String s) {
+        char textArray[] = s.toCharArray();
+        for (int i = 1; i < textArray.length; i++) {
+            char c = textArray[i];
+            if (c >= 65 & c <= 90) {
+                i++;
+                for (; ; ) {
+                    c = textArray[i];
+                    if (c == 32)
+                        break;
+                    if (c == 46) {
+                        textArray[i] = '.';
+                        break;
+                    }
+                    textArray[i] = '*';
+                    i++;
+                }
+            }
+        }
+        return textArray;
+    }
+
+    static int convertToDec(String s) {
+        char textArray[] = s.toCharArray();
+        int binNumLength = textArray.length;
+        double result = 0;
+        for (int i = 0; i <= textArray.length - 1; i++) {
+            binNumLength--;
+            if (textArray[i] == 49)
+                result += Math.pow(2, binNumLength) * 1;
+            else
+                result += Math.pow(2, binNumLength) * 0;
+        }
+        return (int) result;
+    }
+
+    static char[] covertToBin(int x) {
+        String result = "";
+        int temp = x;
+        for (; ; ) {
+            if (temp == 1) {
+                result += "1";
+                break;
+            }
+            result += temp % 2 + "";
+            temp = temp / 2;
+        }
+        char tempArray[] = result.toCharArray();
+        char resultArray[] = new char[tempArray.length];
+        int j = 0;
+        for (int i = tempArray.length - 1; i >= 0; i--) {
+            resultArray[i] = tempArray[j];
+            ++j;
+        }
+        return resultArray;
+    }
+
+}
