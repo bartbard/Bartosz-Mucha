@@ -1,0 +1,28 @@
+package com.basics;
+
+public class ATM {
+    public static void main(String[] args) {
+        int demandMoney = 1187;
+        ATM(demandMoney);
+    }
+    static void ATM(int left) {
+        int banknoteArray[] = {200,100,50,20,10,5,2,1};
+        for (int change: banknoteArray) {
+            left = withdraw(change,left);
+        }
+    }
+        static int withdraw(int banknote ,int left){
+            int tempNum = 0;
+            for (int i = 0; i >= 0; ) {
+                if (left - banknote < 0)
+                    break;
+                if (left - banknote >= 0) {
+                    left = left - banknote;
+                    tempNum++;
+                }
+            }
+            if(tempNum !=0)
+                System.out.println(tempNum + " x " + banknote + "zł");
+            return left;
+        }
+    }
