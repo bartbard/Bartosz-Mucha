@@ -1,0 +1,45 @@
+package com.basics;
+
+public class RelativelyPrime {
+    public static void main(String[] args) {
+        int N = 9;
+        arrayRP(N);
+    }
+
+    static void arrayRP(int n) {
+        int arrayLength = n + 1;
+        char array[][] = new char[arrayLength][arrayLength];
+        char tempN = 49;
+        for (int i = 1; i < arrayLength; i++) {
+            array[0][i] = tempN;
+            tempN++;
+        }
+        tempN = 48;
+        for (int j = 0; j < arrayLength; j++) {
+            array[j][0] = tempN;
+            tempN++;
+        }
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                if (isNumbersRP(i, j)) array[i][j] = '+';
+                else array[i][j] = '.';
+            }
+        }
+        for (int i = 0; i < arrayLength; i++) {
+            System.out.println();
+            for (int j = 0; j < n + 1; j++) {
+                System.out.print(array[i][j]);
+            }
+        }
+    }
+
+    static boolean isNumbersRP(int a, int b) {
+        for (int i = 2; i <= a; i++) {
+            if ((a % i == 0) && (b % i == 0)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+}
