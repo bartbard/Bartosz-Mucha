@@ -1,0 +1,156 @@
+package com.games;
+
+import java.util.Scanner;
+
+public class Battleship {
+    public static void main(String[] args) {
+        menu();
+        switch (scannerString()) {
+            case "PvP": {
+
+                //Deploying Ships
+                char[][] player1Arr = new char[5][5];
+                arrayInitiation(player1Arr);
+                char[][] player2Arr = new char[5][5];
+                arrayInitiation(player2Arr);
+                System.out.println("[Player 1] turn to deploy ships");
+                shipsLineUp(player1Arr);
+                System.out.println("[Player 2] turn to deploy ships");
+                shipsLineUp(player2Arr);
+
+                //GameStats
+                int p1ShipsLeft = 10;
+                char[][] p1EnemyMap = new char[5][5];
+                arrayInitiation(p1EnemyMap);
+                int p2ShipsLeft = 10;
+                char[][] p2EnemyMap = new char[5][5];
+                arrayInitiation(p2EnemyMap);
+
+                //Battle
+                for (; ; ) {
+
+                    //Player 1
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~");
+                    System.out.println("[Player 1] turn");
+                    System.out.println("Player 2 ships");
+                    arrayPrint(p1EnemyMap);
+                    int tempRow = (scannerInt());
+                    int tempColumn = (scannerInt());
+                    for (; ; ) {
+                        if (player2Arr[tempRow][tempColumn] == 'X') {
+                            p1EnemyMap[tempRow][tempColumn] = 'X';
+                            arrayPrint(p1EnemyMap);
+                            System.out.println("BOOM!");
+                            --p2ShipsLeft;
+                            break;
+                        }
+                        if (player2Arr[tempRow][tempColumn] == '.') {
+                            p1EnemyMap[tempRow][tempColumn] = 'O';
+                            arrayPrint(p1EnemyMap);
+                            System.out.println("MISS!");
+                            break;
+                        } else {
+                            System.out.println("Wrong position");
+                            System.out.println("Please choose another place");
+                            tempRow = scannerInt();
+                            tempColumn = scannerInt();
+                        }
+                    }
+                    if (p2ShipsLeft == 0) {
+                        System.out.println("~~~~~~~~~~~~~~Player 1 WON~~~~~~~~~~~~~~");
+                        break;
+                    }
+
+                    //Player 2
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~");
+                    System.out.println("[Player 2] turn");
+                    System.out.println("Player 1 ships");
+                    arrayPrint(p2EnemyMap);
+                    tempRow = (scannerInt());
+                    tempColumn = (scannerInt());
+                    for (; ; ) {
+                        if (player1Arr[tempRow][tempColumn] == 'X') {
+                            p2EnemyMap[tempRow][tempColumn] = 'X';
+                            arrayPrint(p2EnemyMap);
+                            System.out.println("BOOM!");
+                            --p1ShipsLeft;
+                            break;
+                        }
+                        if (player1Arr[tempRow][tempColumn] == '.') {
+                            p2EnemyMap[tempRow][tempColumn] = 'O';
+                            arrayPrint(p2EnemyMap);
+                            System.out.println("MISS!");
+                            break;
+                        } else {
+                            System.out.println("Wrong position");
+                            System.out.println("Please choose another place");
+                            tempRow = scannerInt();
+                            tempColumn = scannerInt();
+                        }
+                    }
+                    if (p1ShipsLeft == 0) {
+                        System.out.println("~~~~~~~~~~~~~~Player 2 WON~~~~~~~~~~~~~~");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+
+    private static void menu() {
+        System.out.println("Welcome in the battlefield!");
+        System.out.println("Choose mode");
+        System.out.println("'PvP' for Player vs Player");
+    }
+
+    private static String scannerString() {
+        return new Scanner(System.in).nextLine();
+    }
+
+    private static int scannerInt() {
+        return new Scanner(System.in).nextInt();
+    }
+
+    private static char arrayInitiation(char[][] emptyArray) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                emptyArray[i][j] = '.';
+            }
+        }
+        return 0;
+    }
+
+    private static char arrayPrint(char arrayToPrint[][]) {
+        System.out.println();
+        for (int i = 0; i < 5; i++) {
+            System.out.println();
+            for (int j = 0; j < 5; j++) {
+                System.out.print(arrayToPrint[i][j]);
+            }
+        }
+        System.out.println();
+        return 0;
+    }
+
+    private static char shipsLineUp(char playerArr[][]) {
+        for (int i = 0; i < 10; i++) {
+            int tempRow = (scannerInt());
+            int tempColumn = (scannerInt());
+            for (int j = 0; j < Integer.MAX_VALUE; j++) {
+                if (playerArr[tempRow][tempColumn] == '.') {
+                    playerArr[tempRow][tempColumn] = 'X';
+                    arrayPrint(playerArr);
+                    break;
+                } else {
+                    System.out.println("Wrong position");
+                    System.out.println("Please choose another place");
+                    tempRow = scannerInt();
+                    tempColumn = scannerInt();
+                }
+            }
+        }
+        return 0;
+    }
+}
+
