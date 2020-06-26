@@ -1,0 +1,79 @@
+package com.basics;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class HangMan {
+    public static void main(String[] args) {
+        String[] words = new String[]{"house", "brand", "motel", "cinema", "battlefield", "stronghold"};
+        char[] word = randomWord(words);
+        int howManyRightGuess = 0;
+        char[] mistakes = new char[word.length];
+        int howManyMistakes = 0;
+        char[] game = new char[word.length];
+        for (int i = 0; i < word.length; i++) {
+            game[i] = '_';
+        }
+        for (int i = 0; i < word.length; i++) {
+            mistakes[i] = '_';
+        }
+        game(mistakes,game);
+        String temp = "";
+        for (; ; ) {
+            boolean miss = true;
+            temp = scanner();
+            char tempChar = temp.charAt(0);
+            for (int l = 0; l < word.length; l++) {
+                if (word[l] == tempChar) {
+                    game[l] = tempChar;
+                    ++howManyRightGuess;
+                    miss = false;
+                }
+            }
+            if (miss) {
+                mistakes[howManyMistakes] = 'X';
+                ++howManyMistakes;
+            }
+            game(mistakes,game);
+            if (howManyRightGuess == game.length) {
+                System.out.println();
+                System.out.println("~~~~~~~~");
+                System.out.println("You WIN!");
+                System.out.println("~~~~~~~~");
+                break;
+            }
+            if (howManyMistakes == game.length) {
+                System.out.println();
+                System.out.println("~~~~~~~~~");
+                System.out.println("You lose!");
+                System.out.println("~~~~~~~~~");
+                break;
+            }
+        }
+    }
+
+    private static String scanner() {
+        return new Scanner(System.in).next();
+    }
+
+    private static char[] randomWord(String[] wordsList) {
+        int rand = new Random().nextInt(wordsList.length);
+        return wordsList[rand].toCharArray();
+    }
+
+    private static void printGame(char[] game) {
+        for (char c : game) {
+            System.out.print(c);
+            System.out.print(" ");
+        }
+    }
+    private static void game(char[] mistakes, char []game){
+        System.out.println("~~~~~~~~HANGMAN~~~~~~~~");
+        System.out.print("Your game -->");
+        printGame(game);
+        System.out.println();
+        System.out.print("Your remaining lives -->");
+        printGame(mistakes);
+        System.out.println();
+    }
+}
