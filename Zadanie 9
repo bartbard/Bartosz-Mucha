@@ -1,0 +1,78 @@
+package com.basics;
+
+import java.util.Random;
+
+public class Lotto {
+    public static void main(String[] args) {
+        int howManyParticipants = 1000000;
+        int ticketPrice = 3;
+        int prize = howManyParticipants * ticketPrice;
+        int howManyFirstGradeWin = 0;
+        int howManySecondGradeWin = 0;
+        int howManyThirdGradeWin = 0;
+        int howManyFourthGradeWin = 0;
+        double firstGradeWin = 0.8 * prize;
+        double secondGradeWin = 0.1 * prize;
+        double thirdGradeWin = 0.05 * prize;
+        double fourthGradeWin = 0.05 * prize;
+        int[] winningTicket = draw();
+        for (int i = 0; i < howManyParticipants; i++) {
+            int[] tempParticipantTicket = draw();
+            int sameNum = 0;
+            for (int j = 0; j < 6; j++) {
+                for (int n = 0; n < 6; n++) {
+                    if (winningTicket[j] == tempParticipantTicket[n])
+                        ++sameNum;
+                }
+            }
+            if (sameNum == 6)
+                ++howManyFirstGradeWin;
+            if (sameNum == 5)
+                ++howManySecondGradeWin;
+            if (sameNum == 4)
+                ++howManyThirdGradeWin;
+            if (sameNum == 3)
+                ++howManyFourthGradeWin;
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("~~~~~~~~~~~~~~~~~~~Lotto~~~~~~~~~~~~~~~~~~~");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println(howManyParticipants + " people bought the ticket");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("Ticket costs " + ticketPrice);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("The pot of money is " + prize);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("Winner of first grade prize can get " + firstGradeWin + " money");
+        System.out.println("Winner of second grade prize can get " + secondGradeWin + " money");
+        System.out.println("Winner of third grade prize can get " + thirdGradeWin + " money");
+        System.out.println("Winner of fourth grade prize can get " + fourthGradeWin + " money");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("There was/were " + howManyFirstGradeWin + " first grade prize/prizes");
+        System.out.println("There was/were " + howManySecondGradeWin + " second grade prize/prizes");
+        System.out.println("There was/were " + howManyThirdGradeWin + " third grade prize/prizes");
+        System.out.println("There was/were " + howManyFourthGradeWin + " fourth grade prize/prizes");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        if (howManyFirstGradeWin > 0)
+            System.out.println("Winner of first grade prize gets " + firstGradeWin / howManyFirstGradeWin + " money");
+        if (howManySecondGradeWin > 0)
+            System.out.println("Winner of second grade prize gets " + secondGradeWin / howManySecondGradeWin + " money");
+        if (howManyThirdGradeWin > 0)
+            System.out.println("Winner of third grade prize gets " + thirdGradeWin / howManyThirdGradeWin + " money");
+        if (howManyFourthGradeWin > 0)
+            System.out.println("Winner of fourth grade prize gets " + fourthGradeWin / howManyFourthGradeWin + " money");
+    }
+
+    private static int[] draw() {
+        int result[] = new int[6];
+        for (int i = 0; i < 6; ) {
+            int rand = new Random().nextInt(49);
+            if (rand != result[0] && rand != result[1] && rand != result[2] &&
+                    rand != result[3] && rand != result[4] && rand != result[5] && rand != 0) {
+                result[i] = rand;
+                i++;
+            }
+        }
+        return result;
+    }
+}
