@@ -1,0 +1,36 @@
+package com.basics;
+
+import java.util.Random;
+
+public class Scrabble {
+    public static void main(String[] args) {
+        char[] letters = new char[]{'B','B','B','A'};
+        System.out.println(randomWord(letters));
+    }
+
+    private static String randomWord(char[] letters) {
+        char[] newWord = new char[letters.length];
+        int[] indexProtection = new int[letters.length];
+        for (int i = 0; i<letters.length;i++) {
+            indexProtection[i] = -1;
+        }
+        for (int i = 0; i < letters.length; ) {
+            int rand = new Random().nextInt(letters.length);
+            if (!isRandRepeated(rand, letters.length, indexProtection)) {
+                newWord[i] = letters[rand];
+                indexProtection[i] = rand;
+                i++;
+            }
+        }
+        String newWordString = String.valueOf(newWord);
+        return newWordString;
+    }
+
+    private static boolean isRandRepeated(int randomInt, int wordLength, int[] indexProtection) {
+        for (int i = 0; i < wordLength; i++) {
+            if (indexProtection[i] == randomInt)
+                return true;
+        }
+        return false;
+    }
+}
