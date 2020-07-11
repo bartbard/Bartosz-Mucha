@@ -1,0 +1,8 @@
+static String [] censorship(String original) {
+        String words[] = original.split(" ");
+        for (int i = 1; i < words.length; i++) {
+            if (words[i].charAt(0) >= 'A' && words[i].charAt(0) <= 'Z') {
+                words[i] = words[i].replaceAll("([a-z])", "*");
+            }
+        }
+        return words;
